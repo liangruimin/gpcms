@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="cn.gree.zz.bean">
+
+	<class name="Task" table="gree_task">
+		<id name="id">
+			<generator class="native" />
+		</id>
+		<property name="orderNo" column="orderNo"></property>
+		<property name="code" column="code"></property>
+		<property name="result" column="result"></property>
+		<property name="checkTime" column="checkTime"></property>
+		<property name="status" column="status"></property>
+		<property name="line" column="line"></property>
+		<property name="team" column="team"></property>
+
+		<!-- user属性，表示我与User的多对一关系 -->
+		<many-to-one name="user" class="cn.gree.zz.domain.User" column="userId" ></many-to-one>
+
+		<!-- model属性，表示我与Model的多对一关系 -->
+		<many-to-one name="model" class="cn.gree.zz.domain.Model" column="modelId" ></many-to-one>
+		
+		<!-- plan属性，表示我与Plan的多对一关系 -->
+		<many-to-one name="plan" class="cn.gree.zz.bean.Plan" column="planId" ></many-to-one>
+
+	</class>
+
+</hibernate-mapping>
