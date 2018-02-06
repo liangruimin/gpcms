@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="cn.gree.zz.bean">
+
+	<class name="Plan" table="gree_plan">
+		<id name="id">
+			<generator class="native" />
+		</id>
+		<property name="orderNo" column="orderNo"></property>
+		<property name="orderNum" column="orderNum"></property>
+		<property name="item" column="item"></property>
+		<property name="checkNum" column="checkNum"></property>
+		<property name="failNum" column="failNum"></property>
+		<property name="fialRate" column="fialRate"></property>
+		<property name="userName" column="userName"></property>
+		<property name="createTime" column="createTime"></property>
+		<property name="stutus" column="stutus"></property>
+	</class>
+
+</hibernate-mapping>
