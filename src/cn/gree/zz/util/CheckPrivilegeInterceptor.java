@@ -30,14 +30,18 @@ public class CheckPrivilegeInterceptor extends AbstractInterceptor {
 		}
 		String url = namespace + actionName;
 		//一. 如果用户未登录，就转到登录页面
-		if (user == null) {								
-			if (url.startsWith("/loginout_login")) { //// 包含 loginout_loginUI 和 loginout_login
-				// a. 如果当前访问的是登录功能，放行
+		if (user == null) {
+			if(url.startsWith("/task_add")){   //如果是手机端的
 				return invocation.invoke();
-			} else {
-				// b. 如果当前访问的不是登录功能，就转到登录页面
-				return "loginUI";
-			}			
+			}else{
+				if (url.startsWith("/loginout_login")) { // 包含 loginout_loginUI 和 loginout_login
+					// a. 如果当前访问的是登录功能，放行
+					return invocation.invoke();
+				} else {
+					// b. 如果当前访问的不是登录功能，就转到登录页面
+					return "loginUI";
+				}
+			}
 		}
 		//二. 如果用户已登录，就判断权限
 		else {
@@ -46,7 +50,7 @@ public class CheckPrivilegeInterceptor extends AbstractInterceptor {
 				return invocation.invoke();
 			} else {
 				// b. 如果没有权限访问当前的URL，则转到提示消息的页面
-				return "noPrivilegeUI";
+				return "noPrivilege";
 			}
 		}
 	}

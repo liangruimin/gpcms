@@ -31,16 +31,9 @@
     	<!-- 配置全局的Result -->
     	<global-results>
     		<result name="loginUI">/WEB-INF/jsp/loginoutAction/loginUI.jsp</result>
-    		<result name="noPrivilegeUI">/noPrivilegeUI.jsp</result>
-    		<result name="noTime">/noTime.jsp</result>
     		<result name="noPrivilege">/noPrivilege.jsp</result>
-    		<result name="exist">/exist.jsp</result>
     	</global-results>
     	
-    	<!-- 配置测试用的action -->
-    	<action name="Test" class="testAction">
-    		<result name="success">/test.jsp</result>
-    	</action>
     	<!-- 岗位管理 -->
     	<action name="role_*" class="roleAction" method="{1}">
     		<result name="list">/WEB-INF/jsp/roleAction/list.jsp</result>
@@ -61,9 +54,7 @@
     		<result name="list">/WEB-INF/jsp/userAction/list.jsp</result>   		
     		<result name="saveUI">/WEB-INF/jsp/userAction/saveUI.jsp</result>
     		<result name="toList" type="redirectAction">user_list?parentId=${parentId}</result>
-    	</action>
-    	
-    	
+    	</action>    	   	
     	
     	<!-- 登录注销功能 -->
     	<action name="loginout_*" class="loginoutAction" method="{1}">	   		
@@ -74,6 +65,12 @@
     	<!-- 首页 -->
     	<action name="home_*" class="homeAction" method="{1}">
     		<result name="{1}">/WEB-INF/jsp/homeAction/{1}.jsp</result>
+    	</action>
+    	
+    	<!-- 业务流程开始 -->
+    	<!-- 任务管理 -->
+    	<action name="task_*" class="taskAction" method="{1}">
+    		<result name="list">/WEB-INF/jsp/taskAction/list.jsp</result>
     	</action>
     	
     </package>

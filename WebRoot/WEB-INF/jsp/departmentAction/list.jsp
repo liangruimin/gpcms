@@ -26,9 +26,6 @@
             <tr>
             	<th>部门名称</th>
 				<th>上级部门</th>
-				<th>部长</th>
-				<th>副部长</th>
-				<th>部长助理</th>
 				<th>职能说明</th>
 				<th>相关操作</th>
             </tr>
@@ -43,9 +40,6 @@
 					<s:a action="department_list?parentId=%{id}">${name}</s:a>
 				</td>
 				<td>${parent.name}&nbsp;</td>
-				<td>${minister.name}</td>
-				<td>${deputy.name}</td>
-				<td>${assistant.name}</td>
 				<td>${description}&nbsp;</td>
 				<td>
 					<s:a cssClass="tablelink" action="department_delete?id=%{id}&parentId=%{parent.id}" onclick="return window.confirm('这将删除所有的下级部门，您确定要删除吗？')">删除</s:a>

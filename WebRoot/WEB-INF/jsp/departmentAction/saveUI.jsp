@@ -46,44 +46,12 @@
 			</li>
 			<li><label>部门名称</label><s:textfield name="name" type="text" cssClass="dfinput" ></s:textfield><i>*</i></li>
     		<li><label>职能说明</label><s:textarea name="description" cssClass="beizhuinput"></s:textarea></li>
-
-		</ul>
-        
-    	<div class="formtitle"><span>分管领导</span></div>
-    	<ul class="forminfo">
-			<li><label>部长</label>
-				<div class="vocation">
-				    <s:select name="ministerId" cssClass="select1"
-				    	list="ministerList" listKey="id" listValue="name"
-                     	headerKey="" headerValue="==请选择=="
-				    >
-				    </s:select>
-			    </div>
-			</li>
-			<li><label>副部长</label>
-				<div class="vocation">
-				    <s:select name="deputyId" cssClass="select1"
-				    	list="deputyList" listKey="id" listValue="name"
-                     	headerKey="" headerValue="==请选择=="
-				    >
-				    </s:select>
-			    </div>
-			</li>
-			<li><label>部长助理</label>
-				<div class="vocation">
-				    <s:select name="assistantId" cssClass="select1"
-				    	list="deputyList" listKey="id" listValue="name"
-                     	headerKey="" headerValue="==请选择=="
-				    >
-				    </s:select>
-			    </div>
-			</li>
-		    <li style="padding-top: 10px;"><label>&nbsp;</label>
+			<li style="padding-top: 10px;"><label>&nbsp;</label>
 		    	<input name="" type="submit" class="btn" value="保存"/>
 		    	<input name="" type="button" class="btn" value="返回" onclick="javascript:history.go(-1);"/>
 		    </li>
-	    </ul>
-
+		</ul>
+			
     </s:form>
 </div>
 

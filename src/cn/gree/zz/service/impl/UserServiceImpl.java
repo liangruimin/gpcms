@@ -1,7 +1,5 @@
 package cn.gree.zz.service.impl;
 
-import java.util.List;
-
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,6 +30,14 @@ public class UserServiceImpl extends DaoSupportImpl<User> implements UserService
 				"FROM User u WHERE u.loginName = ? AND u.password = ? ")//
 				.setParameter(0, loginName)//
 				.setParameter(1, md5)//
+				.uniqueResult();
+	}
+
+	@Override
+	public User findByloginName(String loginName) {
+		return (User)getSession().createQuery(//
+				"FROM User u WHERE u.loginName = ?")//
+				.setParameter(0, loginName)//
 				.uniqueResult();
 	}
 

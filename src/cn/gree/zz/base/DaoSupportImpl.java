@@ -3,9 +3,12 @@ package cn.gree.zz.base;
 import java.lang.reflect.ParameterizedType;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.annotation.Resource;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,7 +26,7 @@ public abstract class DaoSupportImpl<T> implements DaoSupport<T> {
 		// 通过反射获取T的真是类型
 		ParameterizedType pt = (ParameterizedType) this.getClass().getGenericSuperclass();
 		this.clazz = (Class<T>)pt.getActualTypeArguments()[0];
-		System.out.println("----> clazz= "+clazz);
+		//System.out.println("----> clazz= "+clazz);
 	}
 
 	/**
@@ -76,6 +79,53 @@ public abstract class DaoSupportImpl<T> implements DaoSupport<T> {
 	@Override
 	public List<T> findAll() {
 		return getSession().createQuery("From " +clazz.getSimpleName()).list();
+	}
+	
+	//=========================多条件查询===========================
+	/**
+	 *单表多条记录查询
+	 *@param calssName 要查询的对象
+	 *@param varables 封装查询条件的Map
+	 *@return 返回查询结果的List集合 
+	 */
+	public <T> List<T> queryResultList(Class<T> className,Map<String,Object> varables){
+		List<T> valueList = selectStatement(className,varables,getSession()).list();
+		return valueList;
+	}
+
+	/**
+	 * 拼接SQL查询字符串,得到Query并赋值查询条件
+	 *@param calssName 要查询的对象
+	 *@param varables 封装查询条件的Map
+	 *@param session
+	 *@return Query
+	 */
+	private <T> Query selectStatement(Class<T> className,Map<String,Object> varables,Session session){
+		StringBuilder stringBuilder = new StringBuilder();
+		/*
+		 * 通过className得到该实体类的字符串形式
+		 */
+		stringBuilder.append("FROM " +sessionFactory.getClassMetadata(className).getEntityName()) ;
+		stringBuilder.append(" WHERE 1=1 ");
+		/**
+		 * 动态的拼接hql语句,如果一个属性的值为"",则不往条件中添加.
+		 */
+		for(Entry<String, Object> entry:varables.entrySet()){
+			if(!entry.getValue().equals("")){
+				stringBuilder.append(" AND " + entry.getKey() + "=:" + entry.getKey());
+			}
+		}
+		Query query = getSession().createQuery(stringBuilder.toString());
+		/**
+		 * 动态的给条件赋值
+		 */
+		for(Entry<String, Object> entry:varables.entrySet()){
+			if(!entry.getValue().equals("")){
+				query.setParameter(entry.getKey(), entry.getValue());
+				query.setMaxResults(20);   //最多显示20条
+			}
+		}
+		return query;
 	}
 
 }

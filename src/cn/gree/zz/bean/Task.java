@@ -2,6 +2,7 @@ package cn.gree.zz.bean;
 
 import java.util.Date;
 
+import cn.gree.zz.domain.Department;
 import cn.gree.zz.domain.Model;
 import cn.gree.zz.domain.User;
 
@@ -9,11 +10,12 @@ public class Task {
 	private Long id;
 	private String orderNo;  //订单
 	private String code;     //抽检成品码
-	private Boolean result;  //抽检结果
+	private int result;  //抽检结果
 	private User user;  //抽检人
 	private Date checkTime;  //抽检时间
 	private String status;   //任务状态
 	private Model model;     //机型信息
+	private Department department;  //分厂
 	private String line;     //线体
 	private String team;     //班组
 	private Plan plan;    //所属抽检计划
@@ -37,10 +39,10 @@ public class Task {
 	public void setCode(String code) {
 		this.code = code;
 	}
-	public Boolean getResult() {
+	public int getResult() {
 		return result;
 	}
-	public void setResult(Boolean result) {
+	public void setResult(int result) {
 		this.result = result;
 	}
 	public User getUser() {
@@ -66,6 +68,12 @@ public class Task {
 	}
 	public void setModel(Model model) {
 		this.model = model;
+	}
+	public Department getDepartment() {
+		return department;
+	}
+	public void setDepartment(Department department) {
+		this.department = department;
 	}
 	public String getLine() {
 		return line;

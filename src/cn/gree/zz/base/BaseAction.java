@@ -3,18 +3,21 @@ package cn.gree.zz.base;
 import java.lang.reflect.ParameterizedType;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
-import java.util.TimeZone;
-
 import javax.annotation.Resource;
 
 import cn.gree.zz.domain.Role;
 import cn.gree.zz.domain.User;
 import cn.gree.zz.service.DepartmentService;
+import cn.gree.zz.service.ModelService;
+import cn.gree.zz.service.PlanService;
 import cn.gree.zz.service.PrivilegeService;
 import cn.gree.zz.service.RoleService;
+import cn.gree.zz.service.TaskService;
 import cn.gree.zz.service.UserService;
 
 import com.opensymphony.xwork2.ActionContext;
@@ -33,6 +36,12 @@ public class BaseAction<T> extends ActionSupport implements ModelDriven<T> {
 	protected UserService userService;
 	@Resource
 	protected PrivilegeService privilegeService;
+	@Resource
+	protected TaskService taskService;
+	@Resource
+	protected ModelService modelService;
+	@Resource
+	protected PlanService planService;
 
 	// ===================== 对ModelDriven的支持 ====================
 
@@ -42,6 +51,7 @@ public class BaseAction<T> extends ActionSupport implements ModelDriven<T> {
 		try {
 			// 通过反射获取T的真是类型
 			ParameterizedType pt = (ParameterizedType) this.getClass().getGenericSuperclass();
+			@SuppressWarnings("unchecked")
 			Class<T> clazz = (Class<T>) pt.getActualTypeArguments()[0];
 			// 通过反射创建model的实例
 			model = clazz.newInstance();
@@ -80,33 +90,30 @@ public class BaseAction<T> extends ActionSupport implements ModelDriven<T> {
 	 	
 	}
 	/**
-	 * 获取当前月份
+	 * 获取当前时间
 	 */
-	public String getCurrentMonth() {
-		DateFormat format = new SimpleDateFormat("yyyy年MM月");
+	public String getCurrentTime() {
+		DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		return format.format(new Date());
 	}
 	/**
-	 * 获取当前季度
+	 * 检查传过来的字段是否合格
+	 * @return
 	 */
-	public String getCurrentQuarter() {
-		Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT+08:00"));  //获取东八区时间
-		int year = calendar.get(Calendar.YEAR);      //获取年份
-		int month = calendar.get(Calendar.MONTH)+1;  //获取月份，0表示1月份
-		return year+"年"+month/3+"季度";  //当前季度
-	}
-	/**
-	 * 获取当前年份
-	 */
-	public String getCurrentYear() {
-		Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT+08:00"));  //获取东八区时间
-		int year = calendar.get(Calendar.YEAR);      //获取年份
-		int month = calendar.get(Calendar.MONTH)+1;  //获取月份，0表示1月份
-		if (month == 6) {
-			return year+"年半年度";
-		} else {
-			return year+"年年度";
-		}		
+	public boolean checkType(String depId,String code,String result,String userNo){
+		Map<String,String> map = new HashMap<String,String>();
+		map.put("depId", depId);
+		map.put("code", code);
+		map.put("result", result);
+		map.put("userNo", userNo);
+		boolean flag = true;
+		for(Entry<String,String> entry:map.entrySet()){
+			if(entry.getValue().equals("") || entry.getValue()==null){
+				flag = false;
+				break;
+			}
+		}
+		return flag;
 	}
 
 }
